@@ -1,13 +1,34 @@
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+
 import { Logo } from '@/components/icons/logo'
 import dogs from '@/assets/dogs.png'
 import Image from 'next/image'
 import { Search } from '@/components/icons/search'
-import { useForm } from 'react-hook-form'
+
+const localFormSchema = z.object({
+  country: z
+    .string()
+    .min(2, { message: 'Minímo 2 letras' })
+    .max(2, { message: 'Apenas a sigla dos estados' })
+    .transform((value) => value.toUpperCase()),
+
+  city: z.string().transform((value) => value.toLowerCase()),
+})
+
+type LocalFormSchema = z.infer<typeof localFormSchema>
 
 export default function Home() {
-  const { register, handleSubmit } = useForm()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LocalFormSchema>({
+    resolver: zodResolver(localFormSchema),
+  })
 
-  function handleLocal(data) {
+  function handleLocal(data: LocalFormSchema) {
     console.log(data)
   }
 
@@ -33,6 +54,7 @@ export default function Home() {
 
         <form
           onSubmit={handleSubmit(handleLocal)}
+          autoComplete="off"
           className="max-sm:w-full flex items-center max-sm:flex-col max-sm:items-center max-sm:gap-5  md:gap-3"
         >
           <p className="max-sm:mt-10">Busque um amigo:</p>
@@ -43,6 +65,12 @@ export default function Home() {
             placeholder="Estado"
             className="bg-background border placeholder:text-white rounded-lg  md:w-[100px] max-sm:p-1 max-sm:pl-4 md:text-center md:p-3"
           />
+
+          {errors.country && (
+            <span className="text-yellow-200 font-bold text-lg">
+              {errors.country.message}
+            </span>
+          )}
           <datalist id="countryList">
             <option value="PE">PE</option>
             <option value="SP">SP</option>
@@ -52,16 +80,14 @@ export default function Home() {
           <input
             {...register('city')}
             type="text"
-            list="cityList"
             placeholder="Cidade"
             className="bg-[#E44449] placeholder:text-white rounded-lg max-sm:p-2 max-sm:pl-4 md:text-center md:p-3"
           />
-
-          <datalist id="cityList">
-            <option value="Recife">Recife</option>
-            <option value="São José dos Campos">São José dos Campos</option>
-            <option value="Rio de Janeiro">Rio de Janeiro</option>
-          </datalist>
+          {errors.city && (
+            <span className="text-yellow-200 font-bold text-lg">
+              {errors.city.message}
+            </span>
+          )}
 
           <button
             type="submit"
