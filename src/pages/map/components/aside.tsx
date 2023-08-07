@@ -10,8 +10,8 @@ export function Aside() {
   const router = useRouter()
 
   return (
-    <aside className="w-[25.5rem] h-screen overflow-y-auto scrollbar-thumb-blue-900 scrollbar-thin lg:pb-5 2xl:pb-0">
-      <header className="bg-[#E44449] h-[15.0625rem] pt-[5.06rem]  pb- px-[2.5rem] flex flex-col items-center">
+    <aside className="w-[25.5rem] h-screen fixed bg-background overflow-y-auto scrollbar-thumb-blue-900 scrollbar-thin pb-5 2xl:pb-0">
+      <header className="bg-[#E44449] h-[15.0625rem] pt-[5.06rem] px-[2.5rem] flex flex-col items-center">
         <div className="flex flex-col items-start">
           <div className="ml-2">
             <DogLogo />
@@ -42,10 +42,8 @@ export function Aside() {
         </div>
       </header>
 
-      <div className="pl-[3.5rem]">
-        <h1 className="font-bold leading-[2.125rem] mt-[2.19rem] mb-5 text-lg">
-          Filtros
-        </h1>
+      <div className="pl-[3.5rem] pt-[2.19rem]">
+        <h1 className="font-bold leading-[2.125rem]  mb-5 text-lg">Filtros</h1>
 
         <form className="flex flex-col gap-6">
           <div className="flex flex-col">

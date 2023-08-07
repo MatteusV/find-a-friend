@@ -4,7 +4,7 @@ export default function Document() {
   return (
     <Html lang="pt-br">
       <Head />
-      <body className="bg-background">
+      <body className="scrollbar-thumb-blue-900 scrollbar-thin">
         <Main />
         <NextScript />
       </body>
