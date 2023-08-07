@@ -1,10 +1,10 @@
+import { Aside } from './components/aside'
+
 export default function Map() {
   return (
-    <div>
-      <aside>
-        <h1>aside</h1>
-      </aside>
-      <main></main>
+    <div className="text-white flex">
+      <Aside />
+      <main className="bg-white flex-1"></main>
     </div>
   )
 }

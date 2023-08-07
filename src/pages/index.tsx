@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useRouter } from 'next/router'
 
 import { Logo } from '@/components/icons/logo'
 import dogs from '@/assets/dogs.png'
@@ -28,8 +29,10 @@ export default function Home() {
     resolver: zodResolver(localFormSchema),
   })
 
-  function handleLocal(data: LocalFormSchema) {
-    console.log(data)
+  const router = useRouter()
+
+  async function handleLocal(data: LocalFormSchema) {
+    await router.push(`/map/${data.country}/${data.city}`)
   }
 
   return (

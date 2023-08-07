@@ -11,8 +11,9 @@ export const theme = {
       background: '#F15156',
     },
     fontFamily: {
-      'sans': ['nunito', ...defaultTheme.fontFamily.sans],
+      sans: ['nunito', ...defaultTheme.fontFamily.sans],
     },
+    plugins: [require('tailwind-scrollbar')],
   },
 }
-export const plugins = []
+export const plugins = [require('tailwind-scrollbar')]
