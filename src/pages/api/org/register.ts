@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 interface RequestBodyProps {
@@ -8,5 +9,3 @@ interface RequestBodyProps {
   address: string
   whatsapp: number
 }
-
-export default function handler(req: NextApiRequest, res: NextApiResponse) {}

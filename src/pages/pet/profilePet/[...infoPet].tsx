@@ -18,6 +18,10 @@ export default function ProfilePet() {
   const country = infoPet && infoPet[0]
   const city = infoPet && infoPet[1]
   const idPet = infoPet && infoPet[2]
+
+  if (!idPet) {
+    return
+  }
   return (
     <div className="">
       <aside className="fixed h-screen w-24 flex flex-col items-center justify-between py-8 bg-background">
