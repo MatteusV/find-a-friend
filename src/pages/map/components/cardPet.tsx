@@ -1,10 +1,22 @@
 import dogAlfredo from '@/assets/cardPet/dogAlfredo.jpeg'
 import { DogLogo } from '@/components/icons/dogLogo'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 
 export function CardPet() {
+  const router = useRouter()
+  const id = 'dfafjasofaso'
   return (
-    <div className="group flex flex-col items-center hover:bg-[#0D3B66] bg-white w-[17.5rem] rounded-[1.25rem]">
+    <div
+      onClick={() =>
+        router.push({
+          pathname: `../pet/profilePet/${
+            router.query.local && router.query.local[0]
+          }/${router.query.local && router.query.local[1]}/${id}`,
+        })
+      }
+      className="group flex flex-col items-center hover:bg-[#0D3B66] bg-white w-[17.5rem] rounded-[1.25rem] hover:cursor-pointer"
+    >
       <Image
         src={dogAlfredo}
         alt=""

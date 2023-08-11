@@ -36,7 +36,7 @@ export default function Home() {
   }
 
   return (
-    <div className="w-full h-screen  max-sm:p-4 text-white md:flex md:flex-col md:justify-around md:gap-10 md:px-[7.06rem] md:py-[7.75rem]">
+    <div className="bg-background w-full h-screen  max-sm:p-4 text-white md:flex md:flex-col md:justify-around md:gap-10 md:px-[7.06rem] md:py-[7.75rem]">
       <header className="w-full flex max-sm:justify-center max-sm:-ml-3 max-sm:mt-2">
         <Logo />
       </header>

@@ -2,10 +2,6 @@ import { DogLogo } from '@/components/icons/dogLogo'
 import { Search } from '@/components/icons/search'
 import { useRouter } from 'next/router'
 
-interface RouterQueryProps {
-  local: [country: string, city: string]
-}
-
 export function Aside() {
   const router = useRouter()
 

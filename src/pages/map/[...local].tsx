@@ -5,7 +5,7 @@ export default function Map() {
   return (
     <div className="text-white flex">
       <Aside />
-      <main className="bg-[#FDECED] ml-[25.5rem] flex-1 overflow-x-hidden xl:px-4 2xl:px-20">
+      <main className="bg-[#FDECED] ml-[25.5rem] flex-1 overflow-x-hidden px-4 2xl:px-20">
         <div className="flex mt-[9.62rem] justify-between">
           <h1 className="text-[#0D3B66] leading-[2.125rem]">
             Encontre <strong>324 amigos</strong> na sua cidade
@@ -23,7 +23,7 @@ export default function Map() {
           </select>
         </div>
 
-        <div className="w-full mt-14 grid grid-cols-3 grid-rows-3 gap-10">
+        <div className="w-full mt-14 grid grid-cols-2 2xl:grid-cols-3 gap-10">
           <CardPet />
           <CardPet />
           <CardPet />
