@@ -8,6 +8,8 @@ import { CarouselCard } from './components/carousel'
 import { Ray } from '@/components/icons/ray'
 import { Maximise } from '@/components/icons/maximise'
 import { Circle } from '@/components/icons/circle'
+import { Whatsapp } from '@/components/icons/whatsapp'
+import { RequirementsToAdopt } from './components/requirementsToAdopt'
 
 export default function ProfilePet() {
   const router = useRouter()
@@ -28,7 +30,7 @@ export default function ProfilePet() {
           <ArrowLeft />
         </div>
       </aside>
-      <main className="w-[calc(100% - 6rem)] ml-[6rem] pt-10 ">
+      <main className="w-[calc(100% - 6rem)] bg-white ml-[6rem] pt-10 ">
         <h1 className="text-[#8FA7B2] text-center text-lg leading-7 font-semibold ">
           Seu novo amigo
         </h1>
@@ -113,8 +115,51 @@ export default function ProfilePet() {
                 </div>
               </div>
 
-              <div className="w-full border border-gray-400 mt-[2.5rem]">
+              <div className="w-full py-[3.12rem] border-y  border-gray-400 mt-[2.5rem]">
+                <div className="flex gap-[1.12rem]">
+                  <div className="p-3 flex justify-center items-center bg-orange-600 rounded-2xl">
+                    <DogLogo />
+                  </div>
+
+                  <div className="flex flex-col">
+                    <h1 className="text-[#0D3B66] text-[1.875rem] font-bold leading-[1.6875]">
+                      Seu Cãopanheiro
+                    </h1>
+
+                    <p className="text-[#0D3B66] text-base font-semibold leading-7">
+                      Rua do meio, 123, Boa Viagem, Recife - PE
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex justify-center gap-3 w-[13.5625rem] py-[0.81rem] bg-[#0D3B66] bg-opacity-5 rounded-[0.625rem] ml-[5.5rem] mt-[1.06rem]">
+                  <Whatsapp fill={false} />
+                  <p>81 1234.4567</p>
+                </div>
+              </div>
+
+              <div className="pt-[3.44rem]">
+                <h1 className="text-[#0D3B66] text-[1.875rem] font-bold leading-[1.6875rem]">
+                  Requesitos para adoção
+                </h1>
+
+                <div className="flex flex-col mt-10 gap-[0.63rem]">
+                  <RequirementsToAdopt text="Local grande para o animal correr e brincar." />
+                  <RequirementsToAdopt text="Proibido apartamento." />
+                  <RequirementsToAdopt text="Ambiente frio, pois possui muito pelo." />
+                  <RequirementsToAdopt text="Cão com intolerância a lactose.." />
+                </div>
+              </div>
+
+              <div className="w-full border-t  border-gray-400 mt-[2.5rem]">
                 {/* SEPARETOR */}
+              </div>
+
+              <div className="flex items-center justify-center gap-[1.01rem] mt-[4.31rem] w-full h-16 rounded-[1.25rem] bg-[#3CDC8C] hover:bg-[#5bc590] hover:cursor-pointer">
+                <Whatsapp fill />
+                <p className="text-[1.125rem] leading-[1.625rem] font-extrabold text-white">
+                  Entrar em contato
+                </p>
               </div>
             </div>
           </div>
