@@ -3,7 +3,7 @@ import { Logo } from '@/components/icons/logo'
 import Image from 'next/image'
 
 import Dog from '@/assets/dogs.png'
-import { FormRegisterOrg } from './components/input'
+import { FormRegisterOrg } from './components/formRegister'
 
 export default function Register() {
   return (

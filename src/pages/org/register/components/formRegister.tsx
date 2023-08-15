@@ -38,18 +38,16 @@ export function FormRegisterOrg() {
     if (data.password === data.confirmPassword) {
       try {
         const passwordHash = await hash(data.password, 6)
-        await api
-          .post('/org/register', {
-            name: data.name,
-            email: data.email,
-            zipCode: data.zipCode,
-            address: data.address,
-            whatsapp: data.whatsapp,
-            password: passwordHash,
-          })
-          .then((response) => console.log(response))
+        await api.post('/org/register', {
+          name: data.name,
+          email: data.email,
+          zipCode: data.zipCode,
+          address: data.address,
+          whatsapp: data.whatsapp,
+          password: passwordHash,
+        })
 
-        await router.push('/login')
+        await router.push('/org/login')
       } catch (err) {
         if (err instanceof AxiosError && err?.response?.data?.message) {
           alert(err.response.data.message)
