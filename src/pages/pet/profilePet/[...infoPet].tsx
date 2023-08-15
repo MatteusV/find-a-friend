@@ -34,7 +34,7 @@ export default function ProfilePet() {
           <ArrowLeft />
         </div>
       </aside>
-      <main className="w-[calc(100% - 6rem)] bg-white ml-[6rem] pt-10 ">
+      <main className="w-[calc(100% - 6rem)] bg-white ml-[6rem] pt-10 pb-5">
         <h1 className="text-[#8FA7B2] text-center text-lg leading-7 font-semibold ">
           Seu novo amigo
         </h1>
