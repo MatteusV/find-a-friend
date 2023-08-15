@@ -15,9 +15,9 @@ model Org {
   email            String @unique
   password_hash    String
   responsible_name String
-  zip_code         Int
+  zip_code         String
   address          String
-  whatsapp         Int
+  whatsapp         String
 
   @@map("orgs")
 }

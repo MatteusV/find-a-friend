@@ -1,6 +1,8 @@
 import { api } from '@/lib/axios'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { AxiosError } from 'axios'
 import { hash } from 'bcryptjs'
+import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
@@ -30,16 +32,31 @@ export function FormRegisterOrg() {
     resolver: zodResolver(registerFormSchema),
   })
 
+  const router = useRouter()
+
   async function handleRegister(data: RegisterFormData) {
     if (data.password === data.confirmPassword) {
-      await api.post('/org/register', {
-        name: data.name,
-        email: data.email,
-        zipCode: data.zipCode,
-        address: data.address,
-        whatsapp: data.whatsapp,
-        password: hash(data.password, 6),
-      })
+      try {
+        const passwordHash = await hash(data.password, 6)
+        await api
+          .post('/org/register', {
+            name: data.name,
+            email: data.email,
+            zipCode: data.zipCode,
+            address: data.address,
+            whatsapp: data.whatsapp,
+            password: passwordHash,
+          })
+          .then((response) => console.log(response))
+
+        await router.push('/login')
+      } catch (err) {
+        if (err instanceof AxiosError && err?.response?.data?.message) {
+          alert(err.response.data.message)
+          return
+        }
+        console.error(err)
+      }
     } else {
       throw new Error('A senhas precisam ser iguais.')
     }

@@ -1,5 +1,6 @@
 import { prisma } from '@/lib/prisma'
 import type { NextApiRequest, NextApiResponse } from 'next'
+import { setCookie } from 'nookies'
 
 export default async function handler(
   req: NextApiRequest,
@@ -30,6 +31,11 @@ export default async function handler(
       whatsapp,
       password_hash: password,
     },
+  })
+
+  setCookie({ res }, '@findafriend:orgId', org.id, {
+    maxAge: 1000 * 60 * 60 * 24 * 7,
+    path: '/',
   })
 
   return res.status(201).json(org)
