@@ -26,14 +26,13 @@ export function FormLogin() {
   })
 
   async function handleLogin(data: LoginFormData) {
-    const { email, password } = data
-    const password_hash = await hash(password, 6)
-
     try {
       await api.post('/org/authenticate', {
-        email,
-        password: password_hash,
+        email: data.email,
+        password: data.password,
       })
+
+      await router.push('/')
     } catch (err) {
       if (err instanceof AxiosError && err?.response?.data?.message) {
         alert(err.response.data.message)

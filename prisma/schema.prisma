@@ -29,6 +29,7 @@ model Pet {
   energy_level       Int
   size               String
   independence_level Int
+  environment        String
 
   @@map("pets")
 }

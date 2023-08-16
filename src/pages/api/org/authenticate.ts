@@ -1,4 +1,5 @@
 import { prisma } from '@/lib/prisma'
+import { compare } from 'bcryptjs'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { setCookie } from 'nookies'
 
@@ -12,14 +13,27 @@ export default async function handler(
 
   const { email, password } = req.body
 
-  const org = await prisma.org.findFirst({
+  if (!email || !password) {
+    return res.status(500).json({ error: 'Didn`t provide email or password' })
+  }
+
+  const org = await prisma.org.findUnique({
     where: {
       email,
-      password_hash: password,
     },
   })
 
-  setCookie({ res }, '@findafriend:orgId', org.id, {
+  if (!org) {
+    return res.status(500).json({ error: 'Not found organization' })
+  }
+
+  const doesPasswordMatches = compare(password, org.password_hash)
+
+  if (!doesPasswordMatches) {
+    return res.status(405).json({ error: 'Invalid credentials' })
+  }
+
+  setCookie({ res }, '@find-a-friend:orgId', org.id, {
     maxAge: 1000 * 60 * 60 * 24 * 7,
     path: '/',
   })

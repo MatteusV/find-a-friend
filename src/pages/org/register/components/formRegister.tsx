@@ -37,14 +37,13 @@ export function FormRegisterOrg() {
   async function handleRegister(data: RegisterFormData) {
     if (data.password === data.confirmPassword) {
       try {
-        const passwordHash = await hash(data.password, 6)
         await api.post('/org/register', {
           name: data.name,
           email: data.email,
           zipCode: data.zipCode,
           address: data.address,
           whatsapp: data.whatsapp,
-          password: passwordHash,
+          password: data.password,
         })
 
         await router.push('/org/login')

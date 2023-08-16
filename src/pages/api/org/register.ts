@@ -1,4 +1,5 @@
 import { prisma } from '@/lib/prisma'
+import { hash } from 'bcryptjs'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { setCookie } from 'nookies'
 
@@ -11,6 +12,8 @@ export default async function handler(
   }
 
   const { name, email, zipCode, address, whatsapp, password } = req.body
+
+  const password_hash = await hash(password, 6)
 
   const orgWithSameEmail = await prisma.org.findUnique({
     where: {
@@ -29,13 +32,8 @@ export default async function handler(
       zip_code: zipCode,
       address,
       whatsapp,
-      password_hash: password,
+      password_hash,
     },
-  })
-
-  setCookie({ res }, '@findafriend:orgId', org.id, {
-    maxAge: 1000 * 60 * 60 * 24 * 7,
-    path: '/',
   })
 
   return res.status(201).json(org)
