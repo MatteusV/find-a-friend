@@ -8,7 +8,7 @@ import { FormPet } from './components/formRegisterPet'
 export default function Register() {
   const router = useRouter()
   return (
-    <div className="flex bg-[#FDECED] h-screen">
+    <div className="flex bg-[#FDECED] h-[200%]">
       <aside className="fixed h-screen w-24 flex flex-col items-center justify-between py-8 bg-background">
         <DogLogo />
 
@@ -20,8 +20,8 @@ export default function Register() {
         </div>
       </aside>
 
-      <div className=" flex-1 xl:pl-16 flex flex-col items-center">
-        <header className="mt-10  px-[4.5rem] py-4 border border-black flex items-center justify-between gap-8 bg-[#0D3B66] rounded-[1.25rem]">
+      <div className=" flex-1 xl:pl-16 flex flex-col items-center ">
+        <header className="mt-10 w-[50%] px-[4.5rem] py-4 border border-black flex items-center justify-between gap-8 bg-[#0D3B66] rounded-[1.25rem]">
           <DogRegister />
           <div className="flex flex-col">
             <h1 className="text-[1.875rem] text-white font-bold">
