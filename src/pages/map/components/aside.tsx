@@ -6,7 +6,7 @@ export function Aside() {
   const router = useRouter()
 
   return (
-    <aside className="w-[25.5rem] h-screen fixed bg-background overflow-y-auto scrollbar-thumb-blue-900 scrollbar-thin pb-5 2xl:pb-0">
+    <aside className="w-[25.5rem] h-screen fixed  bg-background overflow-y-auto scrollbar-thumb-blue-900 scrollbar-thin pb-5 2xl:pb-0">
       <header className="bg-[#E44449] h-[15.0625rem] pt-[5.06rem] px-[2.5rem] flex flex-col items-center">
         <div className="flex flex-col items-start">
           <div className="ml-2">
@@ -41,7 +41,7 @@ export function Aside() {
       <div className="pl-[3.5rem] pt-[2.19rem]">
         <h1 className="font-bold leading-[2.125rem]  mb-5 text-lg">Filtros</h1>
 
-        <form className="flex flex-col gap-6">
+        <form className="flex flex-col gap-6 ">
           <div className="flex flex-col">
             <label htmlFor="age">Idade</label>
             <select
@@ -93,6 +93,11 @@ export function Aside() {
             </select>
           </div>
         </form>
+      </div>
+      <div className="mt-24 w-full text-center ">
+        <a href="/org/register" className=" underline hover:text-blue-700">
+          Criar organização
+        </a>
       </div>
     </aside>
   )

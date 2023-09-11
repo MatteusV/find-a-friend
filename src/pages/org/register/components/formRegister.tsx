@@ -6,20 +6,32 @@ import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-const registerFormSchema = z.object({
-  name: z.string(),
-  email: z.string().email(),
-  zipCode: z.string().regex(/^[0-9]{5}-[0-9]{3}$/),
-  address: z.string(),
-  whatsapp: z
-    .string()
-    // eslint-disable-next-line no-useless-escape
-    .regex(/^\([1-9]{2}\) (?:[2-8]|9[1-9])[0-9]{3}\-[0-9]{4}$/, {
-      message: 'Digite seu número como o exemplo.',
-    }),
-  password: z.string().min(5, { message: 'Digite mais de 5 caractéres.' }),
-  confirmPassword: z.string().min(5),
-})
+const registerFormSchema = z
+  .object({
+    name: z.string(),
+    email: z.string().email(),
+    zipCode: z.string().regex(/^[0-9]{5}-[0-9]{3}$/),
+    address: z.string(),
+    whatsapp: z
+      .string()
+      // eslint-disable-next-line no-useless-escape
+      .regex(/^\([1-9]{2}\) (?:[2-8]|9[1-9])[0-9]{3}\-[0-9]{4}$/, {
+        message: 'Digite seu número como o exemplo.',
+      }),
+    password: z.string().min(5, { message: 'Digite mais de 5 caractéres.' }),
+    confirmPassword: z
+      .string()
+      .min(5, { message: 'Digite mais de 5 caractéres.' }),
+  })
+  .superRefine(({ confirmPassword, password }, ctx) => {
+    if (confirmPassword !== password) {
+      ctx.addIssue({
+        code: 'custom',
+        message: 'As senhas não estão iguais',
+        path: ['confirmPassword'],
+      })
+    }
+  })
 
 type RegisterFormData = z.infer<typeof registerFormSchema>
 
@@ -35,27 +47,25 @@ export function FormRegisterOrg() {
   const router = useRouter()
 
   async function handleRegister(data: RegisterFormData) {
-    if (data.password === data.confirmPassword) {
-      try {
-        await api.post('/org/register', {
-          name: data.name,
-          email: data.email,
-          zipCode: data.zipCode,
-          address: data.address,
-          whatsapp: data.whatsapp,
-          password: data.password,
-        })
+    console.log(data)
+    try {
+      const passwordHash = await hash(data.password, 6)
+      await api.post('/org/register', {
+        name: data.name,
+        email: data.email,
+        zipCode: data.zipCode,
+        address: data.address,
+        whatsapp: data.whatsapp,
+        passwordHash,
+      })
 
-        await router.push('/org/login')
-      } catch (err) {
-        if (err instanceof AxiosError && err?.response?.data?.message) {
-          alert(err.response.data.message)
-          return
-        }
-        console.error(err)
+      await router.push('/org/login')
+    } catch (err) {
+      if (err instanceof AxiosError && err?.response?.data?.message) {
+        alert(err.response.data.message)
+        return
       }
-    } else {
-      throw new Error('A senhas precisam ser iguais.')
+      console.error(err)
     }
   }
   return (

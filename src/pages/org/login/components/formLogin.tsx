@@ -27,12 +27,13 @@ export function FormLogin() {
 
   async function handleLogin(data: LoginFormData) {
     try {
+      const passwordHash = await hash(data.password, 6)
       await api.post('/org/authenticate', {
         email: data.email,
-        password: data.password,
+        passwordHash,
       })
 
-      await router.push('/')
+      // await router.push('/')
     } catch (err) {
       if (err instanceof AxiosError && err?.response?.data?.message) {
         alert(err.response.data.message)
@@ -93,7 +94,7 @@ export function FormLogin() {
 
       <button
         type="button"
-        className="bg-[#0D3B66] bg-opacity-5 py-2 flex justify-center items-center rounded-[1.25rem] xl:text-base 2xl:text-xl font-extrabold text-[#0D3B66] leading-[2.125rem]"
+        className="bg-[#0D3B66] bg-opacity-20 py-2 px-5 flex justify-center items-center rounded-[1.25rem] xl:text-base 2xl:text-xl font-extrabold text-[#0D3B66] leading-[2.125rem]"
         onClick={async () => {
           await router.push('/org/register')
         }}

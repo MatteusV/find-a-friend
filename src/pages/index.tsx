@@ -36,7 +36,7 @@ export default function Home() {
   }
 
   return (
-    <div className="bg-background w-full h-screen  max-sm:p-4 text-white md:flex md:flex-col md:justify-around md:gap-10 md:px-[7.06rem] md:py-[7.75rem]">
+    <div className="bg-background w-full h-screen max-sm:h-max  max-sm:p-4 text-white md:flex md:flex-col md:justify-around md:gap-10 md:px-[7.06rem] md:py-[7.75rem]">
       <header className="w-full flex max-sm:justify-center max-sm:-ml-3 max-sm:mt-2">
         <Logo />
       </header>
@@ -94,11 +94,17 @@ export default function Home() {
 
           <button
             type="submit"
-            className="max-sm:w-[150px] max-sm:rounded-lg bg-[#F4D35E] max-sm:flex max-sm:justify-center max-sm:p-2 md:p-3 md:rounded-xl hover:cursor-pointer hover:bg-[#ffd22d]"
+            className="max-sm:w-[200px] max-sm:rounded-lg bg-[#F4D35E] max-sm:flex max-sm:justify-center max-sm:p-2 md:p-3 md:rounded-xl hover:cursor-pointer hover:bg-[#ffd22d]"
           >
             <Search />
           </button>
         </form>
+
+        <div className="md:hidden w-full mt-10  text-center">
+          <a href="" className="underline hover:text-yellow-300">
+            Criar organização
+          </a>
+        </div>
       </footer>
     </div>
   )
