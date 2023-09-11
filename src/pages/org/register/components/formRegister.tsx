@@ -1,37 +1,23 @@
 import { api } from '@/lib/axios'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { AxiosError } from 'axios'
-import { hash } from 'bcryptjs'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-const registerFormSchema = z
-  .object({
-    name: z.string(),
-    email: z.string().email(),
-    zipCode: z.string().regex(/^[0-9]{5}-[0-9]{3}$/),
-    address: z.string(),
-    whatsapp: z
-      .string()
-      // eslint-disable-next-line no-useless-escape
-      .regex(/^\([1-9]{2}\) (?:[2-8]|9[1-9])[0-9]{3}\-[0-9]{4}$/, {
-        message: 'Digite seu número como o exemplo.',
-      }),
-    password: z.string().min(5, { message: 'Digite mais de 5 caractéres.' }),
-    confirmPassword: z
-      .string()
-      .min(5, { message: 'Digite mais de 5 caractéres.' }),
-  })
-  .superRefine(({ confirmPassword, password }, ctx) => {
-    if (confirmPassword !== password) {
-      ctx.addIssue({
-        code: 'custom',
-        message: 'As senhas não estão iguais',
-        path: ['confirmPassword'],
-      })
-    }
-  })
+const registerFormSchema = z.object({
+  name: z.string(),
+  email: z.string().email(),
+  zipCode: z.string().regex(/^[0-9]{5}-[0-9]{3}$/),
+  address: z.string(),
+  whatsapp: z
+    .string()
+    // eslint-disable-next-line no-useless-escape
+    .regex(/^\([1-9]{2}\) (?:[2-8]|9[1-9])[0-9]{3}\-[0-9]{4}$/, {
+      message: 'Digite seu número como o exemplo.',
+    }),
+  password: z.string().min(5, { message: 'Digite mais de 5 caractéres.' }),
+})
 
 type RegisterFormData = z.infer<typeof registerFormSchema>
 
@@ -47,16 +33,14 @@ export function FormRegisterOrg() {
   const router = useRouter()
 
   async function handleRegister(data: RegisterFormData) {
-    console.log(data)
     try {
-      const passwordHash = await hash(data.password, 6)
       await api.post('/org/register', {
         name: data.name,
         email: data.email,
         zipCode: data.zipCode,
         address: data.address,
         whatsapp: data.whatsapp,
-        passwordHash,
+        password: data.password,
       })
 
       await router.push('/org/login')
@@ -176,7 +160,7 @@ export function FormRegisterOrg() {
         )}
       </div>
 
-      <div className="flex flex-col">
+      {/* <div className="flex flex-col">
         <label className="text-[#0D3B66] xl:text-sm 2xl:text-base font-semibold">
           Confirma senha
         </label>
@@ -192,7 +176,7 @@ export function FormRegisterOrg() {
             {errors.confirmPassword.message}
           </span>
         )}
-      </div>
+      </div> */}
 
       <button
         type="submit"
