@@ -162,7 +162,7 @@ export function FormPet() {
       </div>
 
       <h1 className="text-[#0D3B66] mt-16 xl:text-3xl 2xl:text-[2.5rem] font-extrabold leading-[90%]">
-        Adicione um pet
+        Requisitos para adoção
       </h1>
 
       <div className="w-full border border-[#D3E2E5] mt-[1.37rem] mb-[2.5rem]"></div>

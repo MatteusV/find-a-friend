@@ -8,7 +8,6 @@ import { z } from 'zod'
 import Dog from '@/assets/dogs.png'
 import { Logo } from '@/components/icons/logo'
 import { api } from '@/lib/axios'
-import { nextApi } from '@/lib/api'
 
 const loginFormSchema = z.object({
   email: z.string().email(),
