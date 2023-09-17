@@ -1,6 +1,7 @@
 import { Alert } from '@/components/icons/alert'
 import { Plus } from '@/components/icons/plus'
 import { Upload } from '@/components/icons/upload'
+import { api } from '@/lib/axios'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -17,7 +18,7 @@ const formPetSchema = z.object({
   age: z.string(),
   size: z.string(),
   environment: z.string(),
-  files: z.any().refine((val) => val.length > 0, 'File is required'),
+  file: z.any().refine((val) => val.length > 0, 'File is required'),
 })
 
 type FormPetData = z.infer<typeof formPetSchema>
@@ -44,7 +45,23 @@ export function FormPet() {
   }
 
   async function handleRegisterPet(data: FormPetData) {
-    console.log(data)
+    const config = {
+      headers: {
+        'content-type': 'multipart/form-data',
+      },
+    }
+
+    data.file = data.file[0]
+
+    const final = { ...data, requirements }
+
+    const pet = await api.post(
+      '/pet/register',
+      {
+        final,
+      },
+      config,
+    )
   }
 
   return (
@@ -156,7 +173,7 @@ export function FormPet() {
             multiple
             className="hidden"
             accept="image/png, image/jpeg"
-            {...register('files')}
+            {...register('file')}
           />
         </label>
       </div>

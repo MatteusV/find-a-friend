@@ -8,16 +8,22 @@ import { z } from 'zod'
 import Dog from '@/assets/dogs.png'
 import { Logo } from '@/components/icons/logo'
 import { api } from '@/lib/axios'
+import { useEffect, useState } from 'react'
 
 const loginFormSchema = z.object({
   email: z.string().email(),
   password: z.string(),
 })
 
+const ReplySchema = z.object({
+  token: z.string(),
+})
+
 type LoginFormData = z.infer<typeof loginFormSchema>
 
 export default function Login() {
   const router = useRouter()
+  const [tokenJWT, setTokenJWT] = useState('')
 
   const {
     handleSubmit,
@@ -29,10 +35,16 @@ export default function Login() {
 
   async function handleLogin(data: LoginFormData) {
     try {
-      await api.post('/org/authenticate', {
+      const reply = await api.post('/org/authenticate', {
         email: data.email,
         password: data.password,
       })
+
+      const { token } = ReplySchema.parse(reply.data)
+
+      if (token) {
+        setTokenJWT(token)
+      }
 
       await router.push('/')
     } catch (err) {
@@ -43,6 +55,16 @@ export default function Login() {
       console.error(err)
     }
   }
+
+  useEffect(() => {
+    const verifyExistToken = localStorage.getItem('token')
+
+    if (!verifyExistToken) {
+      if (tokenJWT) {
+        localStorage.setItem('token', tokenJWT)
+      }
+    }
+  }, [tokenJWT])
 
   return (
     <div className="w-full h-screen p-5 flex items-center">
