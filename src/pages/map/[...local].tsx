@@ -1,5 +1,5 @@
-import { Aside } from './components/aside'
-import { CardPet } from './components/cardPet'
+import { Aside } from '@/components/map/aside'
+import { CardPet } from '@/components/map/cardPet'
 
 export default function Map() {
   return (

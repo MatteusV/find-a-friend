@@ -4,12 +4,12 @@ import { useRouter } from 'next/router'
 import Image from 'next/image'
 
 import photoDog from '../../../assets/profilePet/bannerDog.png'
-import { CarouselCard } from './components/carousel'
 import { Ray } from '@/components/icons/ray'
 import { Maximise } from '@/components/icons/maximise'
 import { Circle } from '@/components/icons/circle'
 import { Whatsapp } from '@/components/icons/whatsapp'
-import { RequirementsToAdopt } from './components/requirementsToAdopt'
+import { CarouselCard } from '@/components/pet/carousel'
+import { RequirementsToAdopt } from '@/components/pet/requirementsToAdopt'
 
 export default function ProfilePet() {
   const router = useRouter()

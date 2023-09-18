@@ -1,9 +1,9 @@
 import { ArrowLeft } from '@/components/icons/arrowLeft'
 import { DogLogo } from '@/components/icons/dogLogo'
 import { Logout } from '@/components/icons/logout'
+import { DogRegister } from '@/components/pet/dogRegister'
+import { FormPet } from '@/components/pet/formRegisterPet'
 import { useRouter } from 'next/router'
-import { DogRegister } from './components/dogRegister'
-import { FormPet } from './components/formRegisterPet'
 
 export default function Register() {
   const router = useRouter()
