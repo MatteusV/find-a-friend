@@ -10,6 +10,12 @@ const registerFormSchema = z.object({
   email: z.string().email(),
   zipCode: z.string().regex(/^[0-9]{5}-[0-9]{3}$/),
   address: z.string(),
+  city: z.string().transform((val) => val.toLowerCase()),
+  state: z
+    .string()
+    .min(2, { message: 'Tem que ter 2 letras.' })
+    .max(2, { message: 'Apenas a sigla do estado.' })
+    .transform((val) => val.toLowerCase()),
   whatsapp: z
     .string()
     // eslint-disable-next-line no-useless-escape
@@ -41,13 +47,13 @@ export function FormRegisterOrg() {
         address: data.address,
         whatsapp: data.whatsapp,
         password: data.password,
+        state: data.state,
+        city: data.city,
       })
-
       await router.push('/org/login')
     } catch (err) {
       if (err instanceof AxiosError && err?.response?.data?.message) {
         alert(err.response.data.message)
-        return
       }
       console.error(err)
     }
@@ -108,6 +114,38 @@ export function FormRegisterOrg() {
 
       <div className="flex flex-col">
         <label className="text-[#0D3B66] xl:text-sm 2xl:text-base font-semibold">
+          Estado
+        </label>
+        <input
+          type="text"
+          placeholder="RJ"
+          {...register('state')}
+          className="pl-5 pr-20 py-1 rounded-[0.625rem] border border-[#D3E2E5] bg-[#F5F8FA] placeholder:text-[#0D3B66] 2xl:placeholder:text-base xl:placeholder:text-sm placeholder:font-semibold"
+        />
+
+        {errors.state && (
+          <span className="text-red-600 font-bold">{errors.state.message}</span>
+        )}
+      </div>
+
+      <div className="flex flex-col">
+        <label className="text-[#0D3B66] xl:text-sm 2xl:text-base font-semibold">
+          Cidade
+        </label>
+        <input
+          type="text"
+          placeholder="Rio de janeiro"
+          {...register('city')}
+          className="pl-5 pr-20 py-1 rounded-[0.625rem] border border-[#D3E2E5] bg-[#F5F8FA] placeholder:text-[#0D3B66] 2xl:placeholder:text-base xl:placeholder:text-sm placeholder:font-semibold"
+        />
+
+        {errors.city && (
+          <span className="text-red-600 font-bold">{errors.city.message}</span>
+        )}
+      </div>
+
+      <div className="flex flex-col">
+        <label className="text-[#0D3B66] xl:text-sm 2xl:text-base font-semibold">
           Endereço
         </label>
         <input
@@ -159,24 +197,6 @@ export function FormRegisterOrg() {
           </span>
         )}
       </div>
-
-      {/* <div className="flex flex-col">
-        <label className="text-[#0D3B66] xl:text-sm 2xl:text-base font-semibold">
-          Confirma senha
-        </label>
-        <input
-          type="password"
-          placeholder="*****"
-          {...register('confirmPassword')}
-          className="pl-5 pr-20 py-1 rounded-[0.625rem] border border-[#D3E2E5] bg-[#F5F8FA] placeholder:text-[#0D3B66] 2xl:placeholder:text-base xl:placeholder:text-sm placeholder:font-semibold"
-        />
-
-        {errors.confirmPassword && (
-          <span className="text-red-600 font-bold">
-            {errors.confirmPassword.message}
-          </span>
-        )}
-      </div> */}
 
       <button
         type="submit"

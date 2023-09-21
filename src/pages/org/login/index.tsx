@@ -15,10 +15,6 @@ const loginFormSchema = z.object({
   password: z.string(),
 })
 
-const ReplySchema = z.object({
-  token: z.string(),
-})
-
 type LoginFormData = z.infer<typeof loginFormSchema>
 
 export default function Login() {
@@ -40,10 +36,8 @@ export default function Login() {
         password: data.password,
       })
 
-      const { token } = ReplySchema.parse(reply.data)
-
-      if (token) {
-        setTokenJWT(token)
+      if (reply.data) {
+        setTokenJWT(reply.data)
       }
 
       await router.push('/')
@@ -57,11 +51,11 @@ export default function Login() {
   }
 
   useEffect(() => {
-    const verifyExistToken = localStorage.getItem('token')
+    const verifyExistToken = localStorage.getItem('@find-a-friend:orgId')
 
     if (!verifyExistToken) {
       if (tokenJWT) {
-        localStorage.setItem('token', tokenJWT)
+        localStorage.setItem('@find-a-friend:orgId', tokenJWT)
       }
     }
   }, [tokenJWT])

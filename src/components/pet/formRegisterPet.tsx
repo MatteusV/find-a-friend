@@ -68,7 +68,7 @@ export function FormPet() {
     <form
       encType="multipart/form-data"
       onSubmit={handleSubmit(handleRegisterPet)}
-      className="w-full flex flex-col gap-6"
+      className="w-full flex flex-col gap-6 max-sm:w-[100%]"
     >
       <div>
         <label className="text-[#0D3B66]">Nome</label>
