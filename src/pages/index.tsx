@@ -9,11 +9,11 @@ import Image from 'next/image'
 import { Search } from '@/components/icons/search'
 
 const localFormSchema = z.object({
-  country: z
+  state: z
     .string()
     .min(2, { message: 'Minímo 2 letras' })
     .max(2, { message: 'Apenas a sigla dos estados' })
-    .transform((value) => value.toUpperCase()),
+    .transform((value) => value.toLowerCase()),
 
   city: z.string().transform((value) => value.toLowerCase()),
 })
@@ -32,7 +32,7 @@ export default function Home() {
   const router = useRouter()
 
   async function handleLocal(data: LocalFormSchema) {
-    await router.push(`/map/${data.country}/${data.city}`)
+    await router.push(`/map/${data.state}/${data.city}`)
   }
 
   return (
@@ -63,18 +63,18 @@ export default function Home() {
           <p className="max-sm:mt-10">Busque um amigo:</p>
           <input
             type="text"
-            list="countryList"
-            {...register('country')}
+            list="stateList"
+            {...register('state')}
             placeholder="Estado"
             className="bg-background border placeholder:text-white rounded-lg  md:w-[100px] max-sm:p-1 max-sm:pl-4 md:text-center md:p-3"
           />
 
-          {errors.country && (
+          {errors.state && (
             <span className="text-yellow-200 font-bold text-lg">
-              {errors.country.message}
+              {errors.state.message}
             </span>
           )}
-          <datalist id="countryList">
+          <datalist id="stateList">
             <option value="PE">PE</option>
             <option value="SP">SP</option>
             <option value="RJ">RJ</option>

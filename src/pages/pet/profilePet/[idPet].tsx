@@ -10,18 +10,34 @@ import { Circle } from '@/components/icons/circle'
 import { Whatsapp } from '@/components/icons/whatsapp'
 import { CarouselCard } from '@/components/pet/carousel'
 import { RequirementsToAdopt } from '@/components/pet/requirementsToAdopt'
+import { api } from '@/lib/axios'
+import { useEffect } from 'react'
+import { GetStaticPaths, GetStaticProps } from 'next'
 
-export default function ProfilePet() {
+interface ProfilePetProps {
+  id: string
+  name: string
+  about: string
+  size: string
+  age: string
+  energyLevel: string
+  independenceLevel: string
+  environment: string
+  requirement: string[]
+
+  imagesPet: [
+    {
+      id: string
+      name: string
+      orginalName: string
+      path: string
+    },
+  ]
+}
+
+export default function ProfilePet(props: ProfilePetProps) {
   const router = useRouter()
 
-  const { infoPet } = router.query
-  const country = infoPet && infoPet[0]
-  const city = infoPet && infoPet[1]
-  const idPet = infoPet && infoPet[2]
-
-  if (!idPet) {
-    return
-  }
   return (
     <div className="">
       <aside className="fixed h-screen w-24 flex flex-col items-center justify-between py-8 bg-background">
@@ -29,7 +45,7 @@ export default function ProfilePet() {
 
         <div
           className="p-2 bg-[#F4D35E] rounded-xl hover:cursor-pointer hover:bg-[#F4D82E]"
-          onClick={() => router.push(`../../map/${country}/${city}`)}
+          onClick={() => router.push(`/`)}
         >
           <ArrowLeft />
         </div>
@@ -59,7 +75,7 @@ export default function ProfilePet() {
 
             <div>
               <h1 className="text-[3.375rem] font-extrabold leading-[3.0375rem] text-[#0D3B66] mt-[4.38rem]">
-                Alfredo
+                {props.name}
               </h1>
 
               <p className="mt-[1.63rem] text-[#0D3B66] text-lg font-semibold leading-[1.75rem]">
@@ -171,4 +187,42 @@ export default function ProfilePet() {
       </main>
     </div>
   )
+}
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  return {
+    paths: [],
+    fallback: 'blocking',
+  }
+}
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const idPet = params?.idPet
+  const reply = await api.get(`/pet/${idPet}`)
+
+  const pet = reply.data
+  const image = pet.ImagePet
+
+  return {
+    props: {
+      pet: {
+        id: pet.id,
+        name: pet.name,
+        about: pet.about,
+        size: pet.size,
+        age: pet.age,
+        energyLevel: pet.energy_level,
+        independenceLevel: pet.independence_level,
+        environment: pet.environment,
+        requirement: pet.requirement,
+
+        imagesPet: {
+          id: image.id,
+          name: image.name,
+          orginalName: image.originalName,
+          path: image.path,
+        },
+      },
+    },
+  }
 }

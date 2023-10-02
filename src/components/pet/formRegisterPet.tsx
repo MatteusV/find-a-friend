@@ -1,6 +1,7 @@
 import { Alert } from '@/components/icons/alert'
 import { Plus } from '@/components/icons/plus'
 import { Upload } from '@/components/icons/upload'
+import { nextApi } from '@/lib/api'
 import { api } from '@/lib/axios'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from 'react'
@@ -51,9 +52,7 @@ export function FormPet() {
       },
     }
 
-    data.file = data.file[0]
-
-    const final = { ...data, requirements }
+    const final = { data, requirements }
 
     const pet = await api.post(
       '/pet/register',
@@ -68,7 +67,7 @@ export function FormPet() {
     <form
       encType="multipart/form-data"
       onSubmit={handleSubmit(handleRegisterPet)}
-      className="w-full flex flex-col gap-6 max-sm:w-[100%]"
+      className="w-full flex flex-col gap-6 max-sm:w-[100%]9"
     >
       <div>
         <label className="text-[#0D3B66]">Nome</label>

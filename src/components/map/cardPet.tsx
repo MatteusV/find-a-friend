@@ -3,16 +3,31 @@ import { DogLogo } from '@/components/icons/dogLogo'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 
-export function CardPet() {
+interface CardPetProps {
+  id: string
+  name: string
+  about: string
+  size: string
+  age: string
+  energyLevel: string
+  independenceLevel: string
+  environment: string
+  requirement: string[]
+
+  imagesPet: {
+    id: string
+    name: string
+    orginalName: string
+  }
+}
+
+export function CardPet(props: CardPetProps) {
   const router = useRouter()
-  const id = 'dfafjasofaso'
   return (
     <div
       onClick={() =>
         router.push({
-          pathname: `../pet/profilePet/${
-            router.query.local && router.query.local[0]
-          }/${router.query.local && router.query.local[1]}/${id}`,
+          pathname: `../pet/profilePet/${props.id}`,
         })
       }
       className="group flex flex-col items-center hover:bg-[#0D3B66] bg-white w-[17.5rem] rounded-[1.25rem] hover:cursor-pointer"
@@ -27,7 +42,7 @@ export function CardPet() {
         <DogLogo background />
       </div>
       <h1 className="text-[#0D3B66] font-bold text-lg leading-[1.25rem] pb-[1.06rem]  group-hover:text-white">
-        Alfredo
+        {props.name}
       </h1>
     </div>
   )
