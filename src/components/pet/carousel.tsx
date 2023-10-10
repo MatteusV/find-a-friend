@@ -5,9 +5,10 @@ import { useState } from 'react'
 
 interface CarouselCardProps {
   active: boolean
+  url: string
 }
 
-export function CarouselCard({ active }: CarouselCardProps) {
+export function CarouselCard({ active, url }: CarouselCardProps) {
   const [activeData, setActiveData] = useState(active)
 
   function handleClick() {
@@ -22,9 +23,15 @@ export function CarouselCard({ active }: CarouselCardProps) {
     <div
       data-active={activeData}
       onClick={handleClick}
-      className="w-20 h-20 data-[active=true]:border-[#0D3B66] focus:opacity-60 data-[active=true]:border-4 rounded-[0.9375rem] data-[active=false]:opacity-30 data-[active=true]:opacity-100 hover:cursor-pointer"
+      className="w-auto h-auto flex justify-center items-center data-[active=true]:border-[#0D3B66] focus:opacity-60 data-[active=true]:border-4 rounded-[0.9375rem] data-[active=false]:opacity-70 data-[active=true]:opacity-100 hover:cursor-pointer"
     >
-      <Image src={dog} alt="" className="rounded-lg" />
+      <Image
+        src={url}
+        alt=""
+        width={75}
+        height={72}
+        className="rounded-lg h-[72px] w-[75px]"
+      />
     </div>
   )
 }

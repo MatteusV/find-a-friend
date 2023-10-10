@@ -11,32 +11,38 @@ import { Whatsapp } from '@/components/icons/whatsapp'
 import { CarouselCard } from '@/components/pet/carousel'
 import { RequirementsToAdopt } from '@/components/pet/requirementsToAdopt'
 import { api } from '@/lib/axios'
-import { useEffect } from 'react'
 import { GetStaticPaths, GetStaticProps } from 'next'
 
 interface ProfilePetProps {
-  id: string
-  name: string
-  about: string
-  size: string
-  age: string
-  energyLevel: string
-  independenceLevel: string
-  environment: string
-  requirement: string[]
+  pet: {
+    id: string
+    name: string
+    about: string
+    size: string
+    age: string
+    energyLevel: string
+    independenceLevel: string
+    environment: string
+    requirement: string[]
 
-  imagesPet: [
-    {
-      id: string
-      name: string
-      orginalName: string
-      path: string
-    },
-  ]
+    ImagePet: string[]
+
+    org: {
+      address: string
+      whatsapp: string
+      city: string
+      state: string
+      zipCode: string
+    }
+  }
+  imageUrls: string[]
 }
 
 export default function ProfilePet(props: ProfilePetProps) {
   const router = useRouter()
+  const { pet, imageUrls } = props
+  const { requirement } = pet
+  const firstImage = imageUrls[0]
 
   return (
     <div className="">
@@ -58,29 +64,28 @@ export default function ProfilePet(props: ProfilePetProps) {
         <div className="w-[44rem] mt-10 m-auto ">
           <div className="w-full h-[21rem]">
             <Image
-              src={photoDog}
-              className="h-full  rounded-t-[1.25rem]"
+              src={firstImage}
+              width={1000}
+              height={1000}
+              className="h-full w-full rounded-t-[1.25rem]"
               alt=""
             />
           </div>
 
           <div className="px-[4.5rem]">
-            <div className="w-full  mt-8 flex gap-4 justify-between">
-              <CarouselCard active={true} />
-              <CarouselCard active={false} />
-              <CarouselCard active={false} />
-              <CarouselCard active={false} />
-              <CarouselCard active={false} />
+            <div className="w-full  mt-8 flex gap-4 justify-start">
+              {imageUrls.map((url) => (
+                <CarouselCard active={url === firstImage} key={url} url={url} />
+              ))}
             </div>
 
             <div>
               <h1 className="text-[3.375rem] font-extrabold leading-[3.0375rem] text-[#0D3B66] mt-[4.38rem]">
-                {props.name}
+                {pet.name}
               </h1>
 
               <p className="mt-[1.63rem] text-[#0D3B66] text-lg font-semibold leading-[1.75rem]">
-                Eu sou um lindo doguinho de 3 anos, um jovem bricalhão que adora
-                fazer companhia, uma bagunça mas também ama uma soneca.
+                {pet.about}
               </p>
 
               <div className="mt-[2.69rem] flex gap-[0.87rem]">
@@ -94,7 +99,8 @@ export default function ProfilePet(props: ProfilePetProps) {
                   </div>
 
                   <p className="text-[#0D3B66] text-lg font-semibold lead-[1.125rem]">
-                    Muita energia
+                    {pet.energyLevel[0].toUpperCase() +
+                      pet.energyLevel.substring(1)}
                   </p>
                 </div>
 
@@ -104,7 +110,8 @@ export default function ProfilePet(props: ProfilePetProps) {
                   </div>
 
                   <p className="text-[#0D3B66] text-lg font-semibold lead-[1.125rem]">
-                    Ambiente amplo
+                    {pet.environment[0].toUpperCase() +
+                      pet.environment.substring(1)}
                   </p>
                 </div>
 
@@ -116,7 +123,7 @@ export default function ProfilePet(props: ProfilePetProps) {
                   </div>
 
                   <p className="text-[#0D3B66] text-lg font-semibold lead-[1.125rem]">
-                    Pequeninho
+                    {pet.size[0].toUpperCase() + pet.size.substring(1)}
                   </p>
                 </div>
               </div>
@@ -147,14 +154,18 @@ export default function ProfilePet(props: ProfilePetProps) {
                     </h1>
 
                     <p className="text-[#0D3B66] text-base font-semibold leading-7">
-                      Rua do meio, 123, Boa Viagem, Recife - PE
+                      {`${pet.org.address[0].toUpperCase()}${pet.org.address.substring(
+                        1,
+                      )}, ${pet.org.city[0].toUpperCase()}${pet.org.city.substring(
+                        1,
+                      )} - ${pet.org.state.toUpperCase()}`}
                     </p>
                   </div>
                 </div>
 
                 <div className="flex justify-center gap-3 w-[13.5625rem] py-[0.81rem] bg-[#0D3B66] bg-opacity-5 rounded-[0.625rem] ml-[5.5rem] mt-[1.06rem]">
                   <Whatsapp fill={false} />
-                  <p>81 1234.4567</p>
+                  <p>{pet.org.whatsapp}</p>
                 </div>
               </div>
 
@@ -164,10 +175,7 @@ export default function ProfilePet(props: ProfilePetProps) {
                 </h1>
 
                 <div className="flex flex-col mt-10 gap-[0.63rem]">
-                  <RequirementsToAdopt text="Local grande para o animal correr e brincar." />
-                  <RequirementsToAdopt text="Proibido apartamento." />
-                  <RequirementsToAdopt text="Ambiente frio, pois possui muito pelo." />
-                  <RequirementsToAdopt text="Cão com intolerância a lactose.." />
+                  <RequirementsToAdopt text="jsjapdijwdjj" />
                 </div>
               </div>
 
@@ -200,9 +208,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const idPet = params?.idPet
   const reply = await api.get(`/pet/${idPet}`)
 
-  const pet = reply.data
-  const image = pet.ImagePet
-
+  const { pet, imageUrls } = reply.data
+  const { ImagePet, org } = pet
   return {
     props: {
       pet: {
@@ -216,13 +223,17 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         environment: pet.environment,
         requirement: pet.requirement,
 
-        imagesPet: {
-          id: image.id,
-          name: image.name,
-          orginalName: image.originalName,
-          path: image.path,
+        ImagePet,
+
+        org: {
+          address: org.address,
+          whatsapp: org.whatsapp,
+          city: org.city,
+          state: org.state,
+          zipCode: org.zip_code,
         },
       },
+      imageUrls,
     },
   }
 }

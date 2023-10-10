@@ -1,7 +1,6 @@
 import { Aside } from '@/components/map/aside'
 import { CardPet } from '@/components/map/cardPet'
 import { api } from '@/lib/axios'
-import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
 export default function Map() {
