@@ -7,6 +7,7 @@ import { Logo } from '@/components/icons/logo'
 import dogs from '@/assets/dogs.png'
 import Image from 'next/image'
 import { Search } from '@/components/icons/search'
+import { RemoveAccentsFromWord } from '@/utils/removesAccentsFromWords'
 
 const localFormSchema = z.object({
   state: z
@@ -32,7 +33,9 @@ export default function Home() {
   const router = useRouter()
 
   async function handleLocal(data: LocalFormSchema) {
-    await router.push(`/map/${data.state}/${data.city}`)
+    const city = RemoveAccentsFromWord(data.city)
+    console.log(city)
+    await router.push(`/map/${data.state}/${city}`)
   }
 
   return (

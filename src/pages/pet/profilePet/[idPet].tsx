@@ -41,7 +41,6 @@ interface ProfilePetProps {
 export default function ProfilePet(props: ProfilePetProps) {
   const router = useRouter()
   const { pet, imageUrls } = props
-  const { requirement } = pet
   const firstImage = imageUrls[0]
 
   return (

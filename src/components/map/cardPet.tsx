@@ -1,4 +1,3 @@
-import dogAlfredo from '@/assets/cardPet/dogAlfredo.jpeg'
 import { DogLogo } from '@/components/icons/dogLogo'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
@@ -6,19 +5,8 @@ import { useRouter } from 'next/router'
 interface CardPetProps {
   id: string
   name: string
-  about: string
-  size: string
-  age: string
-  energyLevel: string
-  independenceLevel: string
-  environment: string
-  requirement: string[]
 
-  imagesPet: {
-    id: string
-    name: string
-    orginalName: string
-  }
+  imagesPet: string
 }
 
 export function CardPet(props: CardPetProps) {
@@ -33,7 +21,9 @@ export function CardPet(props: CardPetProps) {
       className="group flex flex-col items-center hover:bg-[#0D3B66] bg-white w-[17.5rem] rounded-[1.25rem] hover:cursor-pointer"
     >
       <Image
-        src={dogAlfredo}
+        src={props.imagesPet}
+        width={100}
+        height={100}
         alt=""
         className="mt-0.5 w-[17.125rem] h-[8.4375rem] rounded-[1.2365rem]"
       />
