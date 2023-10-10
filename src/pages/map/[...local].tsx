@@ -16,10 +16,10 @@ interface MapProps {
 
 export default function Map({ amountPets, imageUrls, pets }: MapProps) {
   return (
-    <div className="text-white flex">
+    <div className="text-white flex max-sm:flex-col">
       <Aside />
-      <main className="bg-[#FDECED] ml-[25.5rem] flex-1 overflow-x-hidden px-4 2xl:px-20 min-h-screen">
-        <div className="flex mt-[9.62rem] justify-between">
+      <main className="bg-[#FDECED] ml-[25.5rem] flex-1 overflow-x-hidden px-4 2xl:px-20 min-h-screen max-sm:ml-0 max-sm:flex max-sm:flex-col max-sm:p-0">
+        <div className="flex mt-[9.62rem] justify-between max-sm:flex max-sm:flex-col max-sm:items-center max-sm:gap-5">
           <h1 className="text-[#0D3B66] leading-[2.125rem]">
             Encontre <strong>{amountPets} amigos</strong> na sua cidade
           </h1>
@@ -36,7 +36,7 @@ export default function Map({ amountPets, imageUrls, pets }: MapProps) {
           </select>
         </div>
 
-        <div className="w-full mt-14 grid grid-cols-2 2xl:grid-cols-3 gap-10">
+        <div className="w-full mt-14 grid grid-cols-2 2xl:grid-cols-3 gap-10 max-sm:flex max-sm:flex-col max-sm:items-center max-sm:p-0">
           {pets.map((pet) => (
             <CardPet
               key={pet.id}

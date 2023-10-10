@@ -3,7 +3,6 @@ import { ArrowLeft } from '../../../components/icons/arrowLeft'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
 
-import photoDog from '../../../assets/profilePet/bannerDog.png'
 import { Ray } from '@/components/icons/ray'
 import { Maximise } from '@/components/icons/maximise'
 import { Circle } from '@/components/icons/circle'
@@ -12,6 +11,7 @@ import { CarouselCard } from '@/components/pet/carousel'
 import { RequirementsToAdopt } from '@/components/pet/requirementsToAdopt'
 import { api } from '@/lib/axios'
 import { GetStaticPaths, GetStaticProps } from 'next'
+import { FormatNumberPhone } from '@/utils/formatNumberPhone'
 
 interface ProfilePetProps {
   pet: {
@@ -41,7 +41,11 @@ interface ProfilePetProps {
 export default function ProfilePet(props: ProfilePetProps) {
   const router = useRouter()
   const { pet, imageUrls } = props
+  const requirement = []
+  requirement.push(pet.requirement)
+
   const firstImage = imageUrls[0]
+  const phoneFormat = FormatNumberPhone(props.pet.org.whatsapp)
 
   return (
     <div className="">
@@ -174,7 +178,9 @@ export default function ProfilePet(props: ProfilePetProps) {
                 </h1>
 
                 <div className="flex flex-col mt-10 gap-[0.63rem]">
-                  <RequirementsToAdopt text="jsjapdijwdjj" />
+                  {requirement.map((value) => (
+                    <RequirementsToAdopt key={value} text={value} />
+                  ))}
                 </div>
               </div>
 
@@ -184,9 +190,14 @@ export default function ProfilePet(props: ProfilePetProps) {
 
               <div className="flex items-center justify-center gap-[1.01rem] mt-[4.31rem] w-full h-16 rounded-[1.25rem] bg-[#3CDC8C] hover:bg-[#5bc590] hover:cursor-pointer">
                 <Whatsapp fill />
-                <p className="text-[1.125rem] leading-[1.625rem] font-extrabold text-white">
+                <a
+                  href={`https://wa.me/55${phoneFormat}`}
+                  target="_BLANK"
+                  className="text-[1.125rem] leading-[1.625rem] font-extrabold text-white"
+                  rel="noreferrer"
+                >
                   Entrar em contato
-                </p>
+                </a>
               </div>
             </div>
           </div>

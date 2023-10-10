@@ -6,7 +6,7 @@ export function Aside() {
   const router = useRouter()
 
   return (
-    <aside className="w-[25.5rem] h-screen fixed  bg-background overflow-y-auto scrollbar-thumb-blue-900 scrollbar-thin pb-5 2xl:pb-0">
+    <aside className="w-[25.5rem] h-screen fixed  bg-background overflow-y-auto scrollbar-thumb-blue-900 scrollbar-thin pb-5 2xl:pb-0 max-sm:hidden">
       <header className="bg-[#E44449] h-[15.0625rem] pt-[5.06rem] px-[2.5rem] flex flex-col items-center">
         <div className="flex flex-col items-start">
           <div className="ml-2">

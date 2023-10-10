@@ -18,7 +18,7 @@ export function CardPet(props: CardPetProps) {
           pathname: `../pet/profilePet/${props.id}`,
         })
       }
-      className="group flex flex-col items-center hover:bg-[#0D3B66] bg-white w-[17.5rem] rounded-[1.25rem] hover:cursor-pointer"
+      className="group flex flex-col items-center hover:bg-[#0D3B66] bg-white w-[17.5rem] rounded-[1.25rem] hover:cursor-pointer pt-2 px-2"
     >
       <Image
         src={props.imagesPet}
