@@ -40,8 +40,15 @@ export default function Home() {
 
   return (
     <div className="bg-background w-full h-screen max-sm:h-max  max-sm:p-4 text-white md:flex md:flex-col md:justify-around md:gap-10 md:px-[7.06rem] md:py-[7.75rem]">
-      <header className="w-full flex max-sm:justify-center max-sm:-ml-3 max-sm:mt-2">
+      <header className="w-full flex md:justify-between md:items-center max-sm:justify-center max-sm:-ml-3 max-sm:mt-2">
         <Logo />
+
+        <a
+          href="/org/register"
+          className="px-4 py-2 max-sm:hidden bg-yellow-400 rounded-lg hover:bg-yellow-500"
+        >
+          Criar organização
+        </a>
       </header>
 
       <main className="max-sm:mt-10 md:flex md:justify-between">
@@ -104,7 +111,7 @@ export default function Home() {
         </form>
 
         <div className="md:hidden w-full mt-10  text-center">
-          <a href="" className="underline hover:text-yellow-300">
+          <a href="/org/register" className="underline hover:text-yellow-300">
             Criar organização
           </a>
         </div>
