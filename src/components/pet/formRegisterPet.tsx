@@ -1,7 +1,6 @@
 import { Alert } from '@/components/icons/alert'
 import { Plus } from '@/components/icons/plus'
 import { Upload } from '@/components/icons/upload'
-import { nextApi } from '@/lib/api'
 import { api } from '@/lib/axios'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from 'react'
@@ -19,6 +18,7 @@ const formPetSchema = z.object({
   age: z.string(),
   size: z.string(),
   environment: z.string(),
+  type: z.string(),
   file: z.any().refine((val) => val.length > 0, 'File is required'),
 })
 
@@ -36,7 +36,7 @@ export function FormPet() {
   const [requirements, setRequirements] = useState<string[]>([])
   const [valueRequirements, setValueRequirements] = useState('')
 
-  function handleChange(event: any) {
+  function handleChange(event: { target: { value: string } }) {
     setValueRequirements(event.target.value)
   }
 
@@ -54,7 +54,7 @@ export function FormPet() {
 
     const final = { data, requirements }
 
-    const pet = await api.post(
+    await api.post(
       '/pet/register',
       {
         final,
@@ -95,6 +95,17 @@ export function FormPet() {
         {errors.about && (
           <span className="text-red-500 font-bold">{errors.about.message}</span>
         )}
+      </div>
+
+      <div>
+        <label className="text-[#0D3B66]">Tipo do pet</label>
+        <select
+          className="w-full py-4 pl-2 bg-[#F5F8FA] rounded-[0.625rem] border border-[#D3E2E5] text-[#0D3B66] font-semibold text-[1.125rem]"
+          {...register('type')}
+        >
+          <option value="cachorro">Cachorro</option>
+          <option value="gato">Gato</option>
+        </select>
       </div>
 
       <div>
