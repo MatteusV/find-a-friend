@@ -8,7 +8,6 @@ interface CardPetProps {
 
   imagesPet: string
 }
-
 export function CardPet(props: CardPetProps) {
   const router = useRouter()
   return (
